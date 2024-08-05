@@ -3,21 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Snake Game</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="gameArea">
-        <div id="outer">
-            <script>
-                for(let i = 1 ; i <= 289 ; i++){
-                    document.write("<div class='box' id = '"+i+"'></div>");
-                }
-            </script>
+    <div class="gameContainer">
+        <div class="scoreBoard">
+            Score: <span id="score">0</span>
         </div>
+        <div class="gameArea">
+            <div id="outer">
+                <script>
+                    for(let i = 1 ; i <= 289 ; i++){
+                        document.write("<div class='box' id='"+i+"'></div>");
+                    }
+                </script>
+            </div>
+        </div>
+        <button onclick="restart()">Restart</button>
     </div>
-
-    <button onclick="restart()">restart</button>
     <script src="app.js"></script>
 </body>
 </html>
