@@ -116,5 +116,4 @@ function food() {
     foodBox.classList.add('food');
 }
 
-// Initial setup
 restart();
