@@ -1,10 +1,35 @@
-*{
-    margin: 0px;
-    padding: 0px;
+* {
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
 }
 
-#outer{
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #282c34;
+    color: white;
+    font-family: Arial, sans-serif;
+}
+
+.gameContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.scoreBoard {
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+.gameArea {
+    position: relative;
+}
+
+#outer {
     background-color: green;
     height: 600px;
     width: 600px;
@@ -12,7 +37,30 @@
     flex-wrap: wrap;
 }
 
-.box{
-    height : 5.88%;
+.box {
+    height: 5.88%;
     width: 5.88%;
+    border: 1px solid #282c34;
+}
+
+.snake {
+    background-color: red;
+}
+
+.food {
+    background-color: yellow;
+    border-radius: 50%;
+}
+
+button {
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #61dafb;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #21a1f1;
 }
