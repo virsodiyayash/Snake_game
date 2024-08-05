@@ -1,135 +1,120 @@
-
 let head = 1;
-let snackBody = [1];
+let snakeBody = [1];
 let direction = 1;
 let foodBox;
-let khavanu;
 let headBox;
 let interval;
-let nextDirection;
+let nextDirection = 1;
+let score = 0;
 
-function moveHead(){
+function moveHead() {
     direction = nextDirection;
-    if(direction == 1){
+    if (direction == 1) {
         head++;
-        if(head % 17 == 1){
+        if (head % 17 == 1) {
             out();
         }
-    }
-    else if(direction == 2){
-        head = head + 17;
-        if(head > 289){
+    } else if (direction == 2) {
+        head += 17;
+        if (head > 289) {
             out();
         }
-    }
-    else if(direction == 3){
+    } else if (direction == 3) {
         head--;
-        if(head % 17 == 0){
+        if (head % 17 == 0) {
+            out();
+        }
+    } else {
+        head -= 17;
+        if (head < 1) {
             out();
         }
     }
-    else{
-        head = head - 17;
-        if(head < 1){
-            out();
-        }
-    }
-    snackBody.push(head);
+    snakeBody.push(head);
     headBox = document.getElementById(head);
-    
-    if(headBox.style.background=="red"){
+
+    if (headBox.classList.contains('snake')) {
         out();
     }
-    if(headBox == foodBox){
+
+    if (headBox == foodBox) {
+        score++;
+        document.getElementById('score').innerText = score;
         food();
-    }
-    else{
+    } else {
         moveTail();
     }
-    headBox.style.background="red";
+    headBox.classList.add('snake');
 }
 
-function moveTail(){
-    let tail = snackBody.shift()
-    let tailBox= document.getElementById(tail).style.background=null;
+function moveTail() {
+    let tail = snakeBody.shift();
+    document.getElementById(tail).classList.remove('snake');
 }
 
-
-function checkHead(){
-    for(let i = 0 ; i < snackBody.length - 1; i++){
-        if(head == i){
-            console.log("out");
-            return false;
-        }
-    }
-    return true;
-}
-
-function restart(){
-    if(interval != null){
+function restart() {
+    if (interval != null) {
         return;
     }
-    for(let i = 0 ; i < snackBody.length ; i++){
-        document.getElementById(snackBody[i]).style.background=null;
+    for (let i = 0; i < snakeBody.length; i++) {
+        document.getElementById(snakeBody[i]).classList.remove('snake');
     }
-    snackBody = [1];
+    snakeBody = [1];
     head = 1;
-    interval = setInterval(moveHead , 160);
+    interval = setInterval(moveHead, 160);
     direction = 1;
     nextDirection = 1;
+    score = 0;
+    document.getElementById('score').innerText = score;
     food();
-    console.log("Food out");
 }
 
-function out(){
-    alert("You are out");
-    head = 1;
+function out() {
+    alert("Game Over! Your score: " + score);
     clearInterval(interval);
     interval = null;
 }
 
-document.addEventListener("keydown" , setDirection);
-function setDirection(e){
-    if(nextDirection != direction){
+document.addEventListener("keydown", setDirection);
+function setDirection(e) {
+    if (nextDirection != direction) {
         return;
     }
-    switch(e.code){                             
-        case "ArrowRight" :                  
-            if(nextDirection != 3){
+    switch (e.code) {
+        case "ArrowRight":
+            if (nextDirection != 3) {
                 nextDirection = 1;
             }
-        break;
-        
-        case "ArrowLeft" :
-            if(nextDirection != 1){
+            break;
+        case "ArrowLeft":
+            if (nextDirection != 1) {
                 nextDirection = 3;
             }
-        break;
-
-        case "ArrowUp" :
-            if(nextDirection != 2){
+            break;
+        case "ArrowUp":
+            if (nextDirection != 2) {
                 nextDirection = 4;
             }
-        break;
-
-        case "ArrowDown" :
-            if(nextDirection != 4){
+            break;
+        case "ArrowDown":
+            if (nextDirection != 4) {
                 nextDirection = 2;
             }
-        break;
+            break;
     }
 }
 
-function food(){
-    do{
-        var khavanu = parseInt(1 + Math.random()*289);
-        if(foodBox != null) {
-            foodBox.style.background=null;
-            foodBox.style.borderRadius="0";
+function food() {
+    do {
+        var khavanu = parseInt(1 + Math.random() * 289);
+        if (foodBox != null) {
+            foodBox.classList.remove('food');
         }
         foodBox = document.getElementById(khavanu);
-    }while(foodBox.style.background != "");
+    } while (foodBox.classList.contains('snake'));
 
-         foodBox.style.background="yellow";
-         foodBox.style.borderRadius="50%";
+    foodBox.classList.add('food');
 }
+
+// Initial setup
+restart();
